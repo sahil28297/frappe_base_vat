@@ -7,6 +7,7 @@ import re
 import json
 import sys
 from frappe import _
+from six import string_types
 from frappe.model.document import Document
 
 _logger = frappe.logger(__name__)
@@ -113,7 +114,7 @@ def ustr(value, hint_encoding='utf-8', errors='strict'):
 	if isinstance(value, unicode):
 		return value
 
-	if not isinstance(value, basestring):
+	if not isinstance(value, string_types):
 		try:
 			return unicode(value)
 		except Exception:
@@ -314,7 +315,7 @@ def validate_vat(doc):
 		vat_or_nif (String), customer_name (String) and vies_vat_check (Boolean).
 	"""
 	from frappe.utils import get_defaults
-	if isinstance(doc, basestring):
+	if isinstance(doc, string_types):
 		doc = json.loads(doc)
 
 	nif = doc.get('vat_or_nif')
